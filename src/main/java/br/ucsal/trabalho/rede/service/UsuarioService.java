@@ -2,9 +2,9 @@ package br.ucsal.trabalho.rede.service;
 
 import br.ucsal.trabalho.rede.dto.UsuarioUpdateDto;
 import br.ucsal.trabalho.rede.exception.NotFoundException;
+import br.ucsal.trabalho.rede.mapper.UsuarioMapper;
 import br.ucsal.trabalho.rede.repository.UsuarioRepository;
 import br.ucsal.trabalho.rede.dto.UsuarioCreateDto;
-import br.ucsal.trabalho.rede.dto.UsuarioMapper;
 import br.ucsal.trabalho.rede.entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

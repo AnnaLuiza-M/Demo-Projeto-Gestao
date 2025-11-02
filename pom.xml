@@ -8,11 +8,11 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.ufba.tomorrow</groupId>
+	<groupId>br.ucsal.trabalho</groupId>
 	<artifactId>redeTrabalho</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tomogram</name>
-	<description>Rede social do Tomorrow</description>
+	<description>Rede social de Resenhas</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -1,25 +1,30 @@
 package br.ucsal.trabalho.rede.controller;
 
-import br.ucsal.trabalho.rede.entity.Postagem;
+import br.ucsal.trabalho.rede.dto.PostagemCreateDto;
+import br.ucsal.trabalho.rede.dto.PostagemResponseDto;
 import br.ucsal.trabalho.rede.service.PostagemService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
+@RequestMapping("/postagens")
 public class PostagemController {
-    @Autowired
-    private PostagemService postagemService;
 
-    @GetMapping("/postagens")
-    public List<Postagem> findAll() {
-        return postagemService.findAll();
+    private final PostagemService postagemService;
+
+    public PostagemController(PostagemService postagemService) {
+        this.postagemService = postagemService;
     }
 
-    @GetMapping("/usuarios/{usuarioId}/postagens")
-    public List<Postagem> findByUsuarioId(@PathVariable("usuarioId") long usuarioId) {
-        return postagemService.findByUsuarioId(usuarioId);
+    @PostMapping
+    public PostagemResponseDto criar(@Valid @RequestBody PostagemCreateDto dto) {
+        return postagemService.criar(dto);
+    }
+
+    @GetMapping
+    public List<PostagemResponseDto> listar(@RequestParam(required = false) String termo) {
+        return postagemService.listar(termo);
     }
 }

@@ -13,6 +13,7 @@ public class Postagem {
 
     private String conteudo;
     private LocalDate dataPublicacao;
+    private String titulo;
 
     @ManyToOne
     @JsonIgnore
@@ -51,5 +52,13 @@ public class Postagem {
 
     public void setCriador(Usuario criador) {
         this.criador = criador;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }
