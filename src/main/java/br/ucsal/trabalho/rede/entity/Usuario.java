@@ -5,11 +5,16 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @DynamicUpdate
-public class Usuario {
+public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,40 +22,74 @@ public class Usuario {
     @NotNull
     @Size(min = 3)
     private String nome;
-//    @NotNull
-//    @NotBlank
+
     @Email
     @Column(unique = true)
     private String email;
 
+    @NotNull
+    private String senha;
+
     @OneToMany(mappedBy = "criador", fetch = FetchType.LAZY)
     private List<Postagem> postagens;
 
-    public Usuario() {
+    public Usuario() {}
+
+    // Getters e Setters
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
+
+    public String getNome() { return nome; }
+
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    public String getSenha() { return senha; }
+
+    public void setSenha(String senha) { this.senha = senha; }
+
+    public List<Postagem> getPostagens() { return postagens; }
+
+    public void setPostagens(List<Postagem> postagens) { this.postagens = postagens; }
+
+    // Métodos exigidos por UserDetails
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(); // sem papéis (roles) por enquanto
     }
 
-    public String getNome() {
-        return nome;
+    @Override
+    public String getPassword() {
+        return senha;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override
@@ -60,13 +99,5 @@ public class Usuario {
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }
-
-    public List<Postagem> getPostagens() {
-        return postagens;
-    }
-
-    public void setPostagens(List<Postagem> postagens) {
-        this.postagens = postagens;
     }
 }

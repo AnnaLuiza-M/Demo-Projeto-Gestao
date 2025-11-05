@@ -25,9 +25,10 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
-    public List<Usuario> findByEmail(String email) {
+    public Usuario findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
+
 
     public Usuario add(UsuarioCreateDto dto) {
         Usuario usuario = UsuarioMapper.INSTANCE.usuarioCreateDtoToUsuario(dto);

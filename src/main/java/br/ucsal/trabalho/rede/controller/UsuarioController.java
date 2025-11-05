@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -22,20 +23,24 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    // GET / - obter todos
     @GetMapping
-    public List<Usuario> findAll(@RequestParam(required = false) String email) {
+    public ResponseEntity<?> findAll(@RequestParam(required = false) String email) {
         if (email != null) {
-            return usuarioService.findByEmail(email);
+            Usuario usuario = usuarioService.findByEmail(email);
+            if (usuario == null) {
+                return ResponseEntity.status(404).body(Map.of("erro", "Usuário não encontrado"));
+            }
+            return ResponseEntity.ok(usuario);
         } else {
-            return usuarioService.findAll();
+            return ResponseEntity.ok(usuarioService.findAll());
         }
     }
 
 
+
     // GET /id - obter um
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> findById(@PathVariable("id") @Min(5) int index) {
+    public ResponseEntity<Usuario> findById(@PathVariable("id") int index) {
         Optional<Usuario> resultado = usuarioService.findById(index);
         return ResponseEntity.of(resultado);
     }
