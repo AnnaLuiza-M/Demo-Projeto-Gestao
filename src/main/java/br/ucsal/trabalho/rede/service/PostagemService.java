@@ -44,4 +44,11 @@ public class PostagemService {
                 : postagemRepository.buscarPorTermo(termo);
         return postagemMapper.toResponseList(postagens);
     }
+
+    public List<PostagemResponseDto> findByCriadorId(Long criadorId) {
+        List<Postagem> postagens = postagemRepository.findByCriadorId(criadorId);
+        return postagemMapper.toResponseList(postagens);
+    }
+
+
 }

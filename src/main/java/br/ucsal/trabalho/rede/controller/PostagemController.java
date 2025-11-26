@@ -27,4 +27,11 @@ public class PostagemController {
     public List<PostagemResponseDto> listar(@RequestParam(required = false) String termo) {
         return postagemService.listar(termo);
     }
+
+    // GET /postagens/por-criador/1
+    @GetMapping("/por-criador/{criadorId}")
+    public List<PostagemResponseDto> listarPorCriador(@PathVariable Long criadorId) {
+        return postagemService.findByCriadorId(criadorId);
+    }
+
 }
